@@ -2,7 +2,7 @@
 
 using namespace std;
 
-int main(int argc, char* argv[])
+int checkInput(int argc, char* argv[])
 {
 	if (argc != 7)
 	{
@@ -60,6 +60,12 @@ int main(int argc, char* argv[])
 		cout << "Wrong input6!" << endl;
 		//return 0;
 	}
+	return 0;
+}
+
+int main(int argc, char* argv[])
+{
+	checkInput(argc, argv);
 
 
 
