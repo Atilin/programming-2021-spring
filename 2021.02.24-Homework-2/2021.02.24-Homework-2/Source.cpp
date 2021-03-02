@@ -114,21 +114,27 @@ int main(int argc, char* argv[])
 		return 0;
 	}
 
+	
+	bool flag = 0; // наличие точки
 	for (int i = 0; i < strlen(argv[ind_op1 + 1]); ++i)
 	{
 		if (argv[ind_op1 + 1][i] == '.')
 		{
-			double number1 = toDouble(argv, ind_op1 + 1);
+			flag = 1;
 			break;
 		}
-		if (i == strlen(argv[ind_op1 + 1]) - 1)
-		{
-			int number1 = toInt(argv, ind_op1 + 1);
-		}
+	}
+	if (flag == 1)
+	{
+		double number1 = toDouble(argv, ind_op1 + 1);
+	}
+	else
+	{
+		int number1 = toInt(argv, ind_op1 + 1);
 	}
 
 
-	//cout << number1 << ' ' << number2 << endl;
+	cout << number1 << ' ' << number2 << endl;
 
 	cout << "argc: " << argc << endl;
 	for (int i = 0; i < argc; ++i)
