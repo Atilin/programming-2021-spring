@@ -76,21 +76,21 @@ bool isDouble(char* argv[], int ind_operand)
 
 double toDouble(char* argv[], int j)
 {
-	double number = 0;
-	bool flag = false;
-	int degree = 0;
+	double number = 0; //финальное число
+	bool flag = false; // индикатор точки
+	int degree = 0; // степень дес€тки, на которую поделим
 
 	for (int i = 0; i < strlen(argv[j]); ++i)
 	{
-		if (flag == true)
+		if (flag == true) //счетчик кол-ва цифр после зап€той
 		{
 			degree++;
 		}
-		if (argv[j][i] == '.')
+		if (argv[j][i] == '.') //индикатор точки
 		{
 			flag = true;
 		}
-		else
+		else //перевод строки в число
 		{
 			number *= 10;
 			number += argv[j][i] - 48;
