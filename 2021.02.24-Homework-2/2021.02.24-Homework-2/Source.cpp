@@ -62,48 +62,125 @@ bool checkInput(int argc, char* argv[], int& ind_op1, int& ind_op2, int& ind_op)
 	return true;
 }
 
+bool isDouble(char* argv[], int ind_operand)
+{
+	for (int i = 0; i < strlen(argv[ind_operand]); ++i)
+	{
+		if (argv[ind_operand][i] == '.')
+		{
+			return true;
+		}
+	}
+	return false;
+}
+
 double toDouble(char* argv[], int j)
 {
-	double number = 0; //финальное число
-	bool flag = false; // индикатор точки
-	int degree = 0; // степень десятки, на которую поделим число
+	double number = 0;
+	bool flag = false;
+	int degree = 0;
 
 	for (int i = 0; i < strlen(argv[j]); ++i)
 	{
-		if (flag == true) //счетчик кол-ва цифр после запятой
+		if (flag == true)
 		{
 			degree++;
 		}
-		if (argv[j][i] == '.') //индикатор точки
+		if (argv[j][i] == '.')
 		{
 			flag = true;
 		}
-		else //перевод строки в число
+		else
 		{
 			number *= 10;
 			number += argv[j][i] - 48;
 		}
-
-		//cout << "check: number1 = " << number << endl;
-
 	}
 	number = number / (double)pow(10, degree);
-	//cout << "check: number1 = " << number << endl;
 	return number;
 }
 
 int toInt(char* argv[], int j)
 {
-	int number = 0; //финальное число
+	int number = 0;
 
 	for (int i = 0; i < strlen(argv[j]); ++i)
 	{
 		number *= 10;
 		number += argv[j][i] - 48;
-
-		//cout << "check: number1 = " << number << endl;
 	}
 	return number;
+}
+
+template<typename T1, typename T2>
+T1 sum(T1 a, T2 b)
+{
+	return a + b;
+}
+
+template<typename T1, typename T2>
+T1 diff(T1 a, T2 b)
+{
+	return a - b;
+}
+
+template<typename T1, typename T2>
+T1 mult(T1 a, T2 b)
+{
+	return a * b;
+}
+
+template<typename T1, typename T2>
+T1 div(T1 a, T2 b)
+{
+	return a / b;
+}
+
+template<typename T1, typename T2>
+T1 mod(T1 a, T2 b)
+{
+	if (a < b)
+		return a;
+	else
+	{
+		while (a > b)
+			a -= b;
+		return a;
+	}
+}
+
+template<typename T1, typename T2>
+T1 calculate(T1 a, T2 b, char operation)
+{
+	switch (operation)
+	{
+	case '+':
+	{
+		return sum(a, b);
+		break;
+	}
+	case '-':
+	{
+		return diff(a, b);
+		break;
+	}
+	case '/':
+	{
+		return div(a, b);
+		break;
+	}
+	case '*':
+	{
+		return mult(a, b);
+		break;
+	}
+	case '%':
+	{
+		return mod(a, b);
+		break;
+	}
+	return 0;
+	}
 }
 
 int main(int argc, char* argv[])
@@ -114,32 +191,11 @@ int main(int argc, char* argv[])
 		return 0;
 	}
 
+	double number1 = isDouble(argv, ind_op1 + 1) ? toDouble(argv, ind_op1 + 1) : toInt(argv, ind_op1 + 1);
+	double number2 = isDouble(argv, ind_op2 + 1) ? toDouble(argv, ind_op2 + 1) : toInt(argv, ind_op2 + 1);
+	char operation = argv[ind_op + 1][0];
+
+	cout << number1 << ' ' << operation << ' ' << number2 << " = " << calculate(number1, number2, operation) << endl;
 	
-	bool flag = 0; // наличие точки
-	for (int i = 0; i < strlen(argv[ind_op1 + 1]); ++i)
-	{
-		if (argv[ind_op1 + 1][i] == '.')
-		{
-			flag = 1;
-			break;
-		}
-	}
-	if (flag == 1)
-	{
-		double number1 = toDouble(argv, ind_op1 + 1);
-	}
-	else
-	{
-		int number1 = toInt(argv, ind_op1 + 1);
-	}
-
-
-	cout << number1 << ' ' << number2 << endl;
-
-	cout << "argc: " << argc << endl;
-	for (int i = 0; i < argc; ++i)
-	{
-		cout << i << ' ' << argv[i] << endl;
-	}
 	return 0;
 }
