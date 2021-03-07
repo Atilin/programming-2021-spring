@@ -149,6 +149,30 @@ T1 mod(T1 a, T2 b)
 	}
 }
 
+//способ 1
+int operationIndex(char operation)
+{
+	switch (operation)
+	{
+	case '+':return 0;
+	case '-':return 1;
+	case '*':return 2;
+	case '/':return 3;
+	case '%':return 4;
+	}
+	return 0;
+}
+
+template<typename T1, typename T2>
+T1 calculate(T1 a, T2 b, char operation)
+{
+	T1(*operations[5])(T1, T2) { sum, diff, mult, div, mod }; //массив функций
+	return operations[operationIndex(operation)](a, b); //вернуть функцию по знаку операции
+}
+//
+
+/* способ 2
+
 template<typename T1, typename T2>
 T1 calculate(T1 a, T2 b, char operation)
 {
@@ -182,6 +206,8 @@ T1 calculate(T1 a, T2 b, char operation)
 	return 0;
 	}
 }
+
+*/
 
 int main(int argc, char* argv[])
 {
