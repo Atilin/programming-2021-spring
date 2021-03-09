@@ -1,23 +1,82 @@
-#include <iostream>
-#include <fstream>
-#include <string>
+#include<iostream>
+#include<fstream>
+
 using namespace std;
 
+bool isDigit(char c)
+{
+	return c >= '0' && c <= '9';
+	/*
+	if (c >= '0' && c <= '9')
+		return true;
+	return false;
+	*/
+}
+bool isSign(char c)
+{
+	if (c == '+' || c == '-')
+		return true;
+	return false;
+}
+bool isNatural(string str, int& index)
+{
+	if (isDigit(str[index]))
+	{
+		while (isDigit(str[++index]));
+		/*
+		while (isDigit(str[index]))
+		{
+			++index;
+		}*/
+		return true;
+	}
+	return false;
+}
+bool isOrder(string str, int& index)
+{
+	if (str[index] == 'E')
+	{
+		index++;
+		if (isNatural(str, index))
+		{
+			return true;
+		}
+		if (isSign(str[index]))
+		{
+			index++;
+			if (isNatural(str, index))
+			{
+				return true;
+			}
+		}
+	}
+	return false;
+}
+bool isMantissa(string str, int& index)
+{
+	return (str[index] == '.' && isNatural(str, ++index) || isNatural(str, index) && str[index] == '.' && isNatural(str, ++index));
+}
+bool isReal(string str)
+{
+	int i = 0;
+	return (isMantissa(str, i) && isOrder(str, i) || isSign(str[i]) && isMantissa(str, ++i) && isOrder(str, i));
+}
 
 int main()
 {
 	ifstream fin("in.txt");
-	while (!fin.eof()) // до тех пор, пока файл не закончилс€
+	ofstream fout("out.txt");
+	while (!fin.eof())
 	{
-		string s;
-		fin >> s;
-		cout << s;
-		system("pause");
+		string str;
+		fin >> str;
+		if (isReal(str) == 1)
+			cout << "=)" << endl;
+		else
+			cout << "=(" << endl;
+		//fout << str << endl;  <---- не направл€ет вывод в out.txt
 	}
+	fout.close();
 	fin.close();
-
-
-
-
 	return 0;
 }
