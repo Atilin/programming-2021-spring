@@ -71,10 +71,9 @@ int main()
 		string str;
 		fin >> str;
 		if (isReal(str) == 1)
-			cout << "=)" << endl;
+			fout << "=)" << endl;
 		else
-			cout << "=(" << endl;
-		//fout << str << endl;  <---- не направляет вывод в out.txt
+			fout << "=(" << endl;
 	}
 	fout.close();
 	fin.close();
